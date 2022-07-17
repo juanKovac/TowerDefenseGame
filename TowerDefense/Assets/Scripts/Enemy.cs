@@ -3,22 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
 {
-    public float speed = 10f;
+    public float startSpeed = 10f;
+    [HideInInspector]
+    public float speed;
 
-    public int health = 100;
-    public int value = 100;
-
-
-    private Transform target;
-    private int wavepointIndex = 0;
+    public float health = 100;
+    public int enemyWorth = 100;
 
     void Start()
-    { 
-        target = Waypoints.points[0];
+    {
+        speed = startSpeed;
     }
-    public void TakeDamege(int amount)
+    public void TakeDamege(float amount)
     {
         health -= amount;
         if (health <= 0)
@@ -26,37 +25,16 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+    public void Slow(float slowPct)
+    {
+        speed = startSpeed * (1f - slowPct);
+    }
+
     void Die()
     {
-        PlayerStats.Money += value;
+        PlayerStats.Money += enemyWorth;
         Destroy(gameObject);
     }
-    void Update()
-    {
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized*speed*Time.deltaTime,Space.World);
 
-        if (Vector3.Distance(transform.position, target.position) <= 0.1f) 
-        {
-            GetNextWavePoint();
-            
-        }
-    }
 
-    void GetNextWavePoint()
-    {
-        if (wavepointIndex >= Waypoints.points.Length - 1)
-        {
-            EndPath();
-            return;
-        }
-        wavepointIndex++;
-        target = Waypoints.points[wavepointIndex];
-    }
-
-    void EndPath()
-    {
-        PlayerStats.Lives --;
-        Destroy(gameObject);
-    }
 }

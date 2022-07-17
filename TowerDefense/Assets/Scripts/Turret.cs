@@ -6,6 +6,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     public Transform target;
+    public Enemy targetEnemy;
 
     [Header("General")]
     public float range = 15f;
@@ -17,7 +18,13 @@ public class Turret : MonoBehaviour
 
     [Header("Use Laser")]
     public bool useLaser = false;
+
+    public int damageOverTime=30;
+    public float slowPercent = 0.5f;
+
     public LineRenderer lineRenderer;
+    public ParticleSystem impactEfect;
+    public Light impactLight;
 
     [Header("Unity Setup Fields")]
     public string enemyTag = "Enemy";
@@ -47,6 +54,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
+            targetEnemy = nearestEnemy.GetComponent<Enemy>();
         }
         else
         {
@@ -61,7 +69,12 @@ public class Turret : MonoBehaviour
             if (useLaser)
             {
                 if (lineRenderer.enabled)
+                {
                     lineRenderer.enabled = false;
+                    impactEfect.Stop();
+                    impactLight.enabled = false;
+                }
+
             }
             return;
         }
@@ -90,15 +103,26 @@ public class Turret : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
     }
     void Laser()
     {
+        targetEnemy.TakeDamege(damageOverTime * Time.deltaTime);
+        targetEnemy.Slow(slowPercent);
+
         if (!lineRenderer.enabled)
         {
             lineRenderer.enabled = true;
+            impactEfect.Play();
+            impactLight.enabled = true;
         }
         lineRenderer.SetPosition(0, firePoint.position);
         lineRenderer.SetPosition(1, target.position);
+
+        Vector3 dir = firePoint.position - target.position;
+        impactEfect.transform.position = target.position + dir.normalized;
+        impactEfect.transform.rotation = Quaternion.LookRotation(dir);
+
     }
 
 
