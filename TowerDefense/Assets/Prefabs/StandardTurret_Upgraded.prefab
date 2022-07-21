@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 8135252762444048411}
   - component: {fileID: 8138351541386882558}
   m_Layer: 0
-  m_Name: StandardTurret
+  m_Name: StandardTurret_Upgraded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -586,7 +586,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8512308020008582335, guid: ce558b21fb53338428fed8f9ddef41dd, type: 3}
   fireRate: 1
   useLaser: 0
-  damageOverTime: 20
+  damageOverTime: 30
   slowPercent: 0.5
   lineRenderer: {fileID: 0}
   impactEfect: {fileID: 0}
