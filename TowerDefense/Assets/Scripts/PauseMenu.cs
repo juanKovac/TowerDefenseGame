@@ -8,11 +8,7 @@ public class PauseMenu : MonoBehaviour
 {
 
     public GameObject ui;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    public SceneFader sceneFader;
 
     // Update is called once per frame
     void Update()
@@ -39,11 +35,12 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Toggle();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     public void Menu()
     {
-        SceneManager.LoadScene(0);
+        Toggle();
+        sceneFader.FadeTo("Menu");
     }
 }
