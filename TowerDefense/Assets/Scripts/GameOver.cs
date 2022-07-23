@@ -16,21 +16,13 @@ public class GameOver : MonoBehaviour
 
     public void Retry()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void Menu()
     {
-        Debug.Log("M");
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        SceneManager.LoadScene(0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private bool doMovement = true;
+
 
     public float panSpeed = 10f;
     public float panBoaderThickness = 10f;
@@ -26,27 +26,19 @@ public class CameraController : MonoBehaviour
             this.enabled = false;
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            doMovement = !doMovement;
-        }
-        if (!doMovement)
-        {
-            return;
-        }
-        if (Input.GetKey("w")  ||  Input.mousePosition.y>=Screen.height- panBoaderThickness)
+        if (Input.GetKey("w") )
         {
             transform.Translate(Vector3.forward*panSpeed * Time.deltaTime,Space.World);
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBoaderThickness)
+        if (Input.GetKey("s") )
         {
             transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBoaderThickness)
+        if (Input.GetKey("d"))
         {
             transform.Translate(Vector3.right * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBoaderThickness)
+        if (Input.GetKey("a"))
         {
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
         }
